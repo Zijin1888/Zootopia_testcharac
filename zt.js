@@ -43,7 +43,7 @@ const questions = [
     type: "single",
     question: "Your ideal weekend is:",
     options: [
-        { text: "Binge-watching shows with friends.", scores: { A: 2 } },
+        { text: "Relaxing with loved ones or friends.", scores: { A: 2 } },
         { text: "Catching up on work and organizing your life.", scores: { R: 2 } },
         { text: "Working on personal projects or hobbies.", scores: { I: 1, G: 1 } },
         { text: "Volunteering at a local shelter.", scores: { H: 2 } }
@@ -83,10 +83,10 @@ const questions = [
     type: "single",
     question: "What's your view on rules?",
     options: [
-        { text: "They're so boring, aren't they?", scores: { F: 1 } },
-        { text: "They should be bent if it helps someone.", scores: { H: 1 } },
+        { text: "They're so rigid, aren't they?", scores: { F: 1 } },
+        { text: "They should be praised if it helps someone.", scores: { H: 1 } },
         { text: "They are necessary for me to lead effectively.", scores: { L: 1, R: 1 } },
-        { text: "They exist for a reason and must be followed.", scores: { R: 2 } }
+        { text: "Although I don't like rules, but they maintain the stability. So I will obey.", scores: { R: 2 } }
     ]
   },
   {
@@ -485,4 +485,5 @@ function hideAllSections() {
     document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active');
     });
+
 }
