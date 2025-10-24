@@ -86,7 +86,7 @@ const questions = [
         { text: "They're so rigid, aren't they?", scores: { F: 1 } },
         { text: "They should be praised if it helps someone.", scores: { H: 1 } },
         { text: "They are necessary for me to lead effectively.", scores: { L: 1, R: 1 } },
-        { text: "Although I don't like rules, but they maintain the stability. So I will obey.", scores: { R: 2 } }
+        { text: "Although I don't like rules, they maintain the stability. So I will obey.", scores: { R: 2 } }
     ]
   },
   {
@@ -487,3 +487,4 @@ function hideAllSections() {
     });
 
 }
+
