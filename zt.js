@@ -321,55 +321,41 @@ function selectOption(optionIndex, questionType) {
     const question = questions[currentQuestion];
     const optionElements = document.querySelectorAll('.option');
     
-    console.log(`🎯 === 用户选择: 第${currentQuestion + 1}题 ===`);
-    console.log(`选择: ${String.fromCharCode(65 + optionIndex)} - ${question.options[optionIndex].text}`);
-    console.log('选择前分数:', JSON.parse(JSON.stringify(scores)));
-    
     if (questionType === "single") {
-        console.log('🔘 单选题处理中...');
         optionElements.forEach(element => element.classList.remove('selected'));
         optionElements[optionIndex].classList.add('selected');
         if (userAnswers[currentQuestion] && userAnswers[currentQuestion].length > 0) {
             const oldOptionIndex = userAnswers[currentQuestion][0];
             const oldPoints = question.options[oldOptionIndex].scores;
-            console.log(`🗑️ 清除旧选择分数:`, oldPoints);
             
             for (const [trait, value] of Object.entries(oldPoints)) {
                 scores[trait] = (scores[trait] || 0) - value;
-                console.log(`   ${trait} -= ${value} → ${scores[trait]}`);
             }
         }
         const newPoints = question.options[optionIndex].scores;
-        console.log(`➕ 添加新选择分数:`, newPoints);
         
         for (const [trait, value] of Object.entries(newPoints)) {
             scores[trait] = (scores[trait] || 0) + value;
-            console.log(`   ${trait} += ${value} → ${scores[trait]}`);
         }
         
         userAnswers[currentQuestion] = [optionIndex];
         
     } else {
-        console.log('☑️ 多选题处理中...');
         const optionElement = optionElements[optionIndex];
         const currentlySelected = userAnswers[currentQuestion] || [];
         const isCurrentlySelected = currentlySelected.includes(optionIndex);
         
         if (isCurrentlySelected) {
-            console.log(`➖ 取消选择`);
             optionElement.classList.remove('selected');
             userAnswers[currentQuestion] = currentlySelected.filter(i => i !== optionIndex);
             
             const points = question.options[optionIndex].scores;
-            console.log(`移除分数:`, points);
             
             for (const [trait, value] of Object.entries(points)) {
                 scores[trait] = (scores[trait] || 0) - value;
-                console.log(`   ${trait} -= ${value} → ${scores[trait]}`);
             }
         } else {
             if (currentlySelected.length < 2) {
-                console.log(`➕ 新增选择`);
                 optionElement.classList.add('selected');
                 userAnswers[currentQuestion] = [...currentlySelected, optionIndex];
                 
@@ -381,15 +367,10 @@ function selectOption(optionIndex, questionType) {
                     console.log(`   ${trait} += ${value} → ${scores[trait]}`);
                 }
             } else {
-                console.log('❌ 已达最大选择数(2个)');
                 alert('You can only select up to 2 options for this question.');
             }
         }
     }
-    
-    console.log('选择后分数:', JSON.parse(JSON.stringify(scores)));
-    console.log('当前题目答案:', userAnswers[currentQuestion]);
-    console.log('📊 当前累计总分:', scores);
 }
 
 function addOptionScores(questionIndex, optionIndex) {
@@ -425,9 +406,6 @@ function showResult() {
 function calculateCharacter() {
     const { H=0, R=0, I=0, L=0, G=0, A=0, F=0, J=0 } = scores;
     const adjustedJ = J * 1.75; 
-    console.log('原始分数:', scores);
-    console.log('调整后正义感:', adjustedJ);
-
     const characterScores = {
         "🐰 Judy Hopps": 
             (G * 2.5) + (adjustedJ * 2.2) + (H * 1.5) + (R * 1.0) - (F * 0.5) - (I * 0.3),
@@ -464,17 +442,16 @@ function calculateCharacter() {
             resultCharacter = character;
         }
     }
-    console.log('各角色最终得分:', characterScores);
-    console.log('获胜角色:', resultCharacter, '得分:', maxScore);
     return resultCharacter;
 }
 
 function restartQuiz() {
     currentQuestion = 0;
-    scores = { H: 0, R: 0, D: 0 };
-    hideAllSections();
-    document.getElementById('name-section').classList.add('active');
+    scores = { H:0, R:0, I:0, L:0, G:0, A:0, F:0, J:0 };
+    startQuiz();
+    document.getElementById('quiz-section').classList.add('active');
 }
+
 
 function backToTest() {
     hideAllSections();
@@ -487,4 +464,5 @@ function hideAllSections() {
     });
 
 }
+
 
